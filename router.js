@@ -40,10 +40,9 @@ var getUsers = function(req, res) {
 };
 
 var postUser = function(req, res) {
-
     var sha256 = crypto.createHash("sha256");
     /**
-     * Hash: 'wouthappios'
+     * Salt added in SHA-256 Hashing Algorithm: 'wouthappios'
      */
     sha256.update(req.params.password + "24e192152fb030eb5c88c215769cbdd0cb2b855db692e177fff99ff478a8fee1", "UTF-8");
     var password = sha256.digest("base64");
@@ -59,15 +58,16 @@ var postUser = function(req, res) {
         created_at: Date.now(),
         updated_at: Date.now()
     }).save(function(err, obj) {
-            if(err)
-                return res.send(500, err);
+        if(err)
+            return res.send(500, err);
 
-            return res.send(obj);
-        });
+        return res.send(obj);
+    });
 };
 
 module.exports = function(app) {
   app.get('/wouths', getWouths);
   app.post('/wouth', postWouth);
   app.get('/users', getUsers);
+  app.post('/user', postUser);
 };
