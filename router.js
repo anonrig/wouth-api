@@ -48,9 +48,9 @@ var postUser = function(req, res) {
     var password = sha256.digest("base64");
 
     new models.User({
-        username: res.params.username,
-        image: res.params.image,
-        email: res.params.email,
+        username: req.body.username,
+        image: req.body.image,
+        email: req.body.email,
         password: password,
         reminder: null,
         following: null,
