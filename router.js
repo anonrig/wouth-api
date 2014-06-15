@@ -1,8 +1,7 @@
-var models = require('./models'),
-    crypto = require('crypto');
+var models = require('./models');
 
 var getWouths = function(req, res) {
-    models.Gossip.find({}, function (err, gossips) {
+    models.Gossip.find({}, function(err, gossips) {
         var list = {};
         gossips.forEach(function(gossip) {
             list[gossip._id] = gossip;
@@ -22,15 +21,15 @@ var postWouth = function(req, res) {
         created_at: Date.now(),
         updated_at: Date.now()
     }).save(function(err, obj) {
-        if(err)
-            return res.send(500, err);
+            if (err)
+                return res.send(500, err);
 
-        return res.send(obj);
-    });
+            return res.send(obj);
+        });
 };
 
 var getUsers = function(req, res) {
-    models.User.find({}, function (err, users) {
+    models.User.find({}, function(err, users) {
         var list = {};
         users.forEach(function(user) {
             list[user._id] = user;
@@ -40,12 +39,7 @@ var getUsers = function(req, res) {
 };
 
 var postUser = function(req, res) {
-    var sha256 = crypto.createHash("sha256");
-    /**
-     * Salt added in SHA-256 Hashing Algorithm: 'wouthappios'
-     */
-    sha256.update(req.params.password + "24e192152fb030eb5c88c215769cbdd0cb2b855db692e177fff99ff478a8fee1", "UTF-8");
-    var password = sha256.digest("base64");
+    var password = models.User.generateHash(req.body.password);
 
     new models.User({
         username: req.body.username,
@@ -58,16 +52,16 @@ var postUser = function(req, res) {
         created_at: Date.now(),
         updated_at: Date.now()
     }).save(function(err, obj) {
-        if(err)
-            return res.send(500, err);
+            if (err)
+                return res.send(500, err);
 
-        return res.send(obj);
-    });
+            return res.send(obj);
+        });
 };
 
 module.exports = function(app) {
-  app.get('/wouths', getWouths);
-  app.post('/wouth', postWouth);
-  app.get('/users', getUsers);
-  app.post('/user', postUser);
+    app.get('/wouths', getWouths);
+    app.post('/wouth', postWouth);
+    app.get('/users', getUsers);
+    app.post('/user', postUser);
 };
