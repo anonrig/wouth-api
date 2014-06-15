@@ -1,0 +1,28 @@
+{
+  "name": "wouth-api",
+  "version": "0.1.0",
+  "description": "wouth app's api",
+  "main": "app.js",
+  "dependencies": {
+    "express": "^4.0.0",
+    "morgan": "1.1.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:anonrig/wouth-api.git"
+  },
+  "keywords": [
+    "wouth",
+    "gossip"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/anonrig/wouth-api/issues"
+  },
+  "homepage": "https://github.com/anonrig/wouth-api"
+}
