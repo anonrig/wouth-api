@@ -1,4 +1,5 @@
 var models = require('./models');
+var routes = require('./routes');
 
 var getWouths = function(req, res) {
     models.Gossip.find({}, function(err, gossips) {
@@ -28,40 +29,9 @@ var postWouth = function(req, res) {
         });
 };
 
-var getUsers = function(req, res) {
-    models.User.find({}, function(err, users) {
-        var list = {};
-        users.forEach(function(user) {
-            list[user._id] = user;
-        });
-        res.send(list);
-    });
-};
-
-var postUser = function(req, res) {
-    var password = models.User.generateHash(req.body.password);
-
-    new models.User({
-        username: req.body.username,
-        image: req.body.image,
-        email: req.body.email,
-        password: password,
-        reminder: null,
-        following: null,
-        followers: null,
-        created_at: Date.now(),
-        updated_at: Date.now()
-    }).save(function(err, obj) {
-            if (err)
-                return res.send(500, err);
-
-            return res.send(obj);
-        });
-};
 
 module.exports = function(app) {
     app.get('/wouths', getWouths);
     app.post('/wouth', postWouth);
-    app.get('/users', getUsers);
-    app.post('/user', postUser);
+    app.use('/users', routes.user);
 };
