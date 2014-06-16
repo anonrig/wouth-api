@@ -3,18 +3,22 @@ var express = require('express'),
     logger = require('morgan'),
     mongoose = require('mongoose'),
     config = require('./config'),
-    bodyParser = require('body-parser');
+    passport= require('passport'),
+    bodyParser = require('body-parser'),
+    cookieParser = require('cookie-parser'),
+    session = require('express-session');
 
 app.use(logger());
 app.use(bodyParser.json());
 app.use(express.static(__dirname + '/public'));
-app.use(function(req, res, next) {
-    res.removeHeader("X-Powered-By");
-    next();
-});
+app.use(cookieParser());
+app.use(session(config.app.session));
+app.use(passport.initialize());
+app.disable('x-powered-by');
 
 // Register routes. (Keep this after generic app.use middleware(s))
 require('./router')(app);
+require('wouth/lib/auth');
 
 mongoose.connect(config.db.host);
 

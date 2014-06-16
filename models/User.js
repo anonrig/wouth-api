@@ -16,7 +16,7 @@ var userSchema = new Schema({
 
 
 userSchema.methods.validPassword = function(password) {
-    return this.password == this.generateHash(password);
+    return this.password == this.model('User').generateHash(password);
 };
 
 
