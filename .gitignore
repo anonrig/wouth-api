@@ -1,3 +1,4 @@
 node_modules/
+!node_modules/wouth/
 .DS_Store
 .idea
