@@ -42,4 +42,9 @@ user.post('/', function(req, res) {
         });
 });
 
+
+user.get('/me', authenticatedMiddleware, function(req, res) {
+   res.json(req.user);
+});
+
 module.exports = user;
