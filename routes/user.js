@@ -4,6 +4,15 @@ var express = require('express'),
 
 var user = express.Router();
 
+function authenticatedMiddleware (req, res, next){
+    if (req.user) {
+        next();
+    }
+    else {
+        res.send(401);
+    }
+};
+
 user.get('/', function(req, res) {
     User.find({}, function(err, users) {
         if (err)
