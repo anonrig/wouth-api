@@ -8,7 +8,9 @@ user.get('/', function(req, res) {
     User.find({}, function(err, users) {
         if (err)
             return res.send(500, err);
-        res.send(users);
+        res.json(users);
+    }, function(err) {
+        res.send(500);
     });
 });
 
@@ -26,8 +28,8 @@ user.post('/', function(req, res) {
     })
         .save(function(err, obj) {
             if (err)
-                return res.send(500, err);
-            res.send(obj);
+                return res.send(500);
+            res.json(obj);
         });
 });
 

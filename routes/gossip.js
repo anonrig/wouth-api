@@ -10,7 +10,9 @@ gossip.get('/', function(req, res) {
         gossips.forEach(function(gossip) {
             list[gossip._id] = gossip;
         });
-        res.send(list);
+        res.json(list);
+    }, function(err) {
+        res.send(500);
     });
 });
 
@@ -26,9 +28,9 @@ gossip.post('/', function(req, res) {
         updated_at: Date.now()
     }).save(function(err, obj) {
         if (err)
-            return res.send(500, err);
+            return res.send(500);
 
-        return res.send(obj);
+        return res.json(obj);
     });
 });
 
